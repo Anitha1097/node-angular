@@ -1,0 +1,74 @@
+<mat-card>
+    <mat-form-field>
+        <textarea matInput rows="16" [value]='newPost'></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)='onAddPost()'>Save post</button>
+</mat-card>
+<br>
+<mat-card>
+    <mat-form-field>
+        <textarea matInput rows="16" #postInput></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)='onAddPost1(postInput)'>Save post1</button>
+</mat-card>
+<br>
+<mat-card>
+    <mat-form-field>
+        <textarea matInput rows="16" [(ngModel)]="post2"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)='onAddPost2()'>Save post2</button>
+</mat-card>
+<br>
+<mat-card>
+    <mat-form-field>
+        <input type="text" matInput [(ngModel)]="postInput1" placeholder="Enter value">
+    </mat-form-field>
+    <mat-form-field>
+        <textarea matInput rows="16" [(ngModel)]="postInput2"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)='onAddPost3()'>Save post4</button>
+</mat-card>
+<p>{{newPost}}</p>
+
+<!-- Form -->
+<mat-card>
+    <form [formGroup]="postForm" (submit)="onSubmit()">
+        <mat-form-field>
+            <input type="text" formControlName="email" matInput placeholder="Enter email">
+            <mat-error *ngIf="postForm.get('email').invalid">Please enter email</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="password" formControlName="password" matInput placeholder="Enter password">
+            <mat-error *ngIf="postForm.get('password').invalid">Please enter password</mat-error>
+        </mat-form-field>
+        <div id="imageUpload">
+            <p>Image Upload</p>
+            <button mat-stroked-button type="submit" (click)="filePicker.click()">pickfile</button>
+            <input type='file' #filePicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && postForm.get('image').valid">
+            <img [src]="imagePreview" [alt]="postForm.value.email">
+        </div>
+        <button mat-raised-button color="primary" type="submit">Save post</button>
+    </form>
+</mat-card>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="PostInputData.length>0 && !isLoading">
+    <mat-accordion multi="true" *ngFor="let postData of PostInputData">
+        <!-- <mat-accordion multi="true" *ngFor="let posts of post"> -->
+
+        <!-- <mat-expansion-panel *ngFor="let postData of posts"> -->
+        <mat-expansion-panel>
+
+            <mat-expansion-panel-header>
+                {{postData.email}}
+            </mat-expansion-panel-header>
+            <p>{{postData.password}}</p>
+            <mat-action-row>
+                <button mat-button color="primary" [routerLink]="['/edit', postData.id]">EDIT</button>
+                <button mat-button color="warn" (click)="onDelete(postData.id)">DELETE</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+<mat-body-1 *ngIf="PostInputData.length<=0 && !isLoading">Error</mat-body-1>

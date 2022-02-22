@@ -1,0 +1,17 @@
+mat-card{
+    width: 80%;
+    margin: auto;
+}
+mat-form-field, textarea{
+width: 100%;
+}
+input[type='file']
+{
+    visibility: hidden;
+}
+#imageUpload{
+    padding-right: 20px;
+}
+#imageUpload p{
+color: tomato;
+}

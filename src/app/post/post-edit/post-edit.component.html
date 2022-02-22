@@ -1,0 +1,31 @@
+  <mat-card>
+    <form [formGroup]="postForm" (submit)="onSavePost()">
+        <mat-form-field>
+            <!-- <input type="text" name="email" matInput [ngModel]="post.email" placeholder="Enter email" #email='ngModel' required email>
+            <mat-error *ngIf="email.invalid">Please enter email</mat-error> -->
+            <input type="email" formControlName="email" matInput  [ngModel]="post.email" placeholder="Enter email">
+            <mat-error *ngIf="postForm.get('email').invalid">Please enter email</mat-error>
+       
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <!-- <input type="password" name="current_password" matInput [ngModel]="post.password" placeholder="Enter password" #current_password='ngModel'
+                required>
+            <mat-error *ngIf="current_password.invalid">Please enter password</mat-error> -->
+       
+            <input type="password" formControlName="current_password" matInput [ngModel]="post.password" placeholder="Enter password">
+            <mat-error *ngIf="postForm.get('current_password').invalid">Please enter password</mat-error>
+        
+        </mat-form-field>
+        <br>
+        <div id="imageUpload">
+            <p>Image Upload</p>
+            <button mat-stroked-button type="submit" (click)="filePicker.click()">pickfile</button>
+            <input type='file' #filePicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && postForm.get('image').valid">
+            <img [src]="imagePreview" [alt]="postForm.value.email">
+        </div>
+        <button mat-raised-button color="primary" type="submit">Save post</button>
+    </form>
+</mat-card>
